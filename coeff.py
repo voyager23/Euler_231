@@ -90,6 +90,7 @@ def legendre(n):
 def raisat_p2(n,r):
 	# Reference Eureka.pdf Author Saisat Proposition 2
 	prng = primerange(n+1)
+	SumOfTerms = 0
 	for p in prng:
 		q = p
 		t = 0
@@ -97,10 +98,14 @@ def raisat_p2(n,r):
 			t += floor(n/q) - floor(r/q) - floor((n-r)/q)
 			q *= p
 		if t > 0:
-			print(f"({p},{t})")
+			SumOfTerms += p*t
+			# print(f"({p},{t})")
+			print('.',end="")
+	print()
+	return SumOfTerms
 
 def main(args):
-	raisat_p2(20000000,15000000)
+	print(raisat_p2(20000000,15000000))
 	print()
 	
 
