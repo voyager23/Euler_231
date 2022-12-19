@@ -22,7 +22,8 @@
 #  
 # 
 
-from sympy import sieve, primefactors
+from sympy import sieve, primefactors, primerange
+from math import floor, factorial
 
 def coeff(n,k):
 	# No sanity checks
@@ -68,10 +69,40 @@ def coeff(n,k):
 	print(n_klist)
 	#  find and divide by prime factors
 	
+def legendre(n):
+	# returns a list of tuples
+	# tuple has number of times each prime factor of n appears in n!
+	# for n = 200 prime factors are [2,5]
+	# tuples are (5,49) (2,197)
 	
+	l_pf = primerange(n+1)
+	
+	lg = list()
+	for prime in l_pf:
+		pn = prime
+		t = 0
+		while pn <= n:
+			t += floor(n / pn)
+			pn *= prime
+		lg.append((prime,t))
+	return lg
+	
+def raisat_p2(n,r):
+	# Reference Eureka.pdf Author Saisat Proposition 2
+	prng = primerange(n+1)
+	for p in prng:
+		q = p
+		t = 0
+		while q <= n:
+			t += floor(n/q) - floor(r/q) - floor((n-r)/q)
+			q *= p
+		if t > 0:
+			print(f"({p},{t})")
 
 def main(args):
-	coeff(200,150)
+	raisat_p2(20000000,15000000)
+	print()
+	
 
 if __name__ == '__main__':
 	import sys
